@@ -1,0 +1,57 @@
+th{
+	text-align: center;
+	padding: 10px;
+}
+td{
+	padding: 8px;
+}
+
+.diceTable{
+	background-color: white;
+	border-radius: 5px;
+	box-shadow: 2px 2px;
+}
+.cardButton{
+	font-size: 40px;
+	color: #faebd7; 
+	text-shadow: 2px 0 black, 0 2px black, 2px 0 black, 0 2px black; 
+	font-family: impact; 
+	letter-spacing: 3px;
+	border-radius: 10px;
+	width: 220px;
+	height: 150px;
+	background-image: url(images/back.jpg);
+	box-shadow: 1px 1px;
+	background-position: center;
+	background-size: cover;
+}
+.cardButton:hover{
+	text-shadow: none;
+	color: transparent;
+	-webkit-transition: -webkit-transform 0.5s;
+    transition: transform 0.5s;
+	background-image: url(images/kingCard.png);
+    -webkit-transform: rotateY(-180deg);
+    transform: rotateY(-180deg);
+	background-position: center;
+	background-size: cover;
+}
+.cardButton:hover ~ .buttontext{
+	-webkit-transition: -webkit-transform 0.5s;
+    transition: transform 0.5s;
+     -webkit-transform: rotateY(-360deg);
+    transform: rotateY(-360deg);
+}
+.buttonText:hover{
+
+}
+h1{
+	color: #faebd7;
+	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
+.backPanel{
+	height: 100vh; 
+	background-image: url(images/back.jpg); 
+	background-size: 150px 300px;
+	width: 10%;
+}

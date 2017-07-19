@@ -2,29 +2,12 @@
 function add(sum, value){
 	return sum + value;
 }
-function selectPlayerOneDice() {
+function selectPlayerDice(playerNumber) {
 	var diceSelector;
 	var playerSelected;
 	var playerSelectedDice;
 	playerSelectedDice = [];
-	playerSelected = document.getElementById('playerOne')
-	diceSelector = [];
-	diceSelector = playerSelected.getElementsByTagName('input');
-	for (var i = 0; i < diceSelector.length; i++) {
-		if(diceSelector[i].checked){
-			var selectedDie;
-			selectedDie = diceSelector[i].value;
-			playerSelectedDice.push(selectedDie)
-		}
-	}
-	return playerSelectedDice	
-}
-function selectPlayerTwoDice() {
-	var diceSelector;
-	var playerSelected;
-	var playerSelectedDice;
-	playerSelectedDice = [];
-	playerSelected = document.getElementById('playerTwo')
+	playerSelected = document.getElementById('player'+playerNumber)
 	diceSelector = [];
 	diceSelector = playerSelected.getElementsByTagName('input');
 	for (var i = 0; i < diceSelector.length; i++) {
@@ -57,34 +40,47 @@ function collectDiceResults(diceSet){
 		}
 	return diceResults
 }
+function reportPlayerBusted(bustedPlayerNumber, bustedPlayerDiceTotal, unbustedPlayerNumber, unbustedPlayerDiceTotal){
+	document.getElementById("scoreBoard").innerHTML = "Player "+bustedPlayerNumber+" total: " + bustedPlayerDiceTotal + ", PLAYER "+bustedPlayerNumber + " BUSTED " + " Player " +unbustedPlayerNumber+" total: " + unbustedPlayerDiceTotal + "  PLAYER "+unbustedPlayerNumber+" WINS";
+	console.log("Player "+bustedPlayerNumber+" total: " + bustedPlayerDiceTotal + ", PLAYER"  + bustedPlayerNumber + " BUSTED");
+}
+function reportTie(playerOneDiceTotal,playerTwoDiceTotal){
+	document.getElementById("scoreBoard").innerHTML = "Player 1 total: " + playerOneDiceTotal + ", Player 2 total: " + playerTwoDiceTotal + ", TIE";
+	console.log("Player 1 total: " + playerOneDiceTotal + ", Player 2 total: " + playerTwoDiceTotal + ", TIE");
+}
+function reportBothPlayersBusted(playerOneDiceTotal, playerTwoDiceTotal){
+	document.getElementById("scoreBoard").innerHTML = "Player 2 total: " + playerTwoDiceTotal + " PLAYER TWO BUSTED" + "  Player 1 total: " + playerOneDiceTotal + "  PLAYER ONE BUSTED";
+	console.log("Player 2 total: " + playerTwoDiceTotal + " PLAYER TWO BUSTED" + "  Player 1 total: " + playerOneDiceTotal + ", PLAYER ONE BUSTED");
+}
+function reportBlackjack(playerNumber, playerDiceTotal){
+	document.getElementById("scoreBoard").innerHTML = "Player "+playerNumber + " total: " + playerDiceTotal + " BLACKJACK";
+	console.log("Player "+playerNumber+" total: " + playerDiceTotal + " BLACKJACK");
+}
 function tabulateScores(playerOneDiceTotal, playerTwoDiceTotal){
+	var playerOnePlaceholder;
+	var playerTwoPlaceholder;
+	playerOnePlaceholder = "ONE";
+	playerTwoPlaceholder = "TWO";
 		if (playerOneDiceTotal > 21 && playerTwoDiceTotal < 21){
-			document.getElementById("scoreBoard").innerHTML = "Player 1 total: " + playerOneDiceTotal + ", PLAYER ONE BUSTED" + " Player 2 total: " + playerTwoDiceTotal + "  PLAYER TWO WINS";
-			console.log("Player 1 total: " + playerOneDiceTotal + ", PLAYER ONE BUSTED");
+			reportPlayerBusted(playerOnePlaceholder, playerOneDiceTotal, playerTwoPlaceholder, playerTwoDiceTotal);
 		}
 		else if (playerTwoDiceTotal > 21 && playerOneDiceTotal < 21 ){
-			document.getElementById("scoreBoard").innerHTML = "Player 2 total: " + playerTwoDiceTotal + " PLAYER TWO BUSTED" + "  Player 1 total: " + playerOneDiceTotal + "  PLAYER ONE WINS";
-			console.log("Player 2 total: " + playerTwoDiceTotal + " PLAYER TWO BUSTED");
+			reportPlayerBusted(playerTwoPlaceholder, playerTwoDiceTotal, playerOnePlaceholder, playerOneDiceTotal);
 		}
 		else if (playerOneDiceTotal === playerTwoDiceTotal){
-			document.getElementById("scoreBoard").innerHTML = "Player 1 total: " + playerOneDiceTotal + ", Player 2 total: " + playerTwoDiceTotal + ", TIE";
-			console.log("Player 1 total: " + playerOneDiceTotal + ", Player 2 total: " + playerTwoDiceTotal + ", TIE");
+			reportTie(playerOneDiceTotal, playerTwoDiceTotal);
 		}
 		else if(playerOneDiceTotal > 21 && playerTwoDiceTotal > 21){
-			document.getElementById("scoreBoard").innerHTML = "Player 2 total: " + playerTwoDiceTotal + " PLAYER TWO BUSTED" + "  Player 1 total: " + playerOneDiceTotal + "  PLAYER ONE BUSTED";
-			console.log("Player 2 total: " + playerTwoDiceTotal + " PLAYER TWO BUSTED" + "  Player 1 total: " + playerOneDiceTotal + ", PLAYER ONE BUSTED");
+			reportBothPlayersBusted(playerOneDiceTotal, playerTwoDiceTotal);
 		}
 		else if (playerOneDiceTotal == 21 ){
-			document.getElementById("scoreBoard").innerHTML = "Player 1 total: " + playerOneDiceTotal + " BLACKJACK";
-			console.log("Player 1 total: " + playerOneDiceTotal + " BLACKJACK");
+			reportBlackjack(playerOnePlaceholder, playerOneDiceTotal);
 		}
 		else if (playerTwoDiceTotal == 21 ){
-			document.getElementById("scoreBoard").innerHTML = "Player 2 total: " + playerTwoDiceTotal + " BLACKJACK";
-			console.log("Player 2 total: " + playerTwoDiceTotal + " BLACKJACK");
+			reportBlackjack(playeTwoPlaceHolder, playerTwoDiceTotal);
 		}
 		else if(playerOneDiceTotal < 21 && playerTwoDiceTotal < 21){
-			document.getElementById("scoreBoard").innerHTML = compareScores(playerOneDiceTotal, playerTwoDiceTotal);
-			console.log(compareScores(playerOneDiceTotal, playerTwoDiceTotal));
+			document.getElementById("scoreBoard").innerHTML = compareScores(playerOneDiceTotal, playerTwoDiceTotal);;
 		}
 }
 function compareScores(playerOneDiceTotal, playerTwoDiceTotal){
@@ -102,10 +98,10 @@ function startGame(){
 	var playerOneDiceTotal;
 	var playerTwoDiceTotal;
 	var playerTwoDiceResults;
-	playerOneDiceSet = selectPlayerOneDice();
+	playerOneDiceSet = selectPlayerDice('One');
 	playerOneDiceResults = collectDiceResults(playerOneDiceSet);
 	playerOneDiceTotal = addDiceValues(playerOneDiceResults);
-	playerTwoDiceSet = selectPlayerTwoDice();
+	playerTwoDiceSet = selectPlayerDice('Two');
 	playerTwoDiceResults = collectDiceResults(playerTwoDiceSet);
 	playerTwoDiceTotal = addDiceValues(playerTwoDiceResults);
 	tabulateScores(playerOneDiceTotal, playerTwoDiceTotal);
