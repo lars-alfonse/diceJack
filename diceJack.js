@@ -38,7 +38,7 @@ function collectDiceResults(diceSet){
 			console.log(dieResult);
 			diceResults.push(dieResult);
 		}
-	return diceResults
+	return diceResults;
 }
 function reportPlayerBusted(bustedPlayerNumber, bustedPlayerDiceTotal, unbustedPlayerNumber, unbustedPlayerDiceTotal){
 	document.getElementById("scoreBoard").innerHTML = "Player "+bustedPlayerNumber+" total: " + bustedPlayerDiceTotal + ", PLAYER "+bustedPlayerNumber + " BUSTED " + " Player " +unbustedPlayerNumber+" total: " + unbustedPlayerDiceTotal + "  PLAYER "+unbustedPlayerNumber+" WINS";
